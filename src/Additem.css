@@ -1,0 +1,170 @@
+/* Global reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* Full page container */
+.cont {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(135deg, rgb(59, 72, 175) 0%, rgb(59, 72, 175) 31%, rgb(55, 66, 150) 31%, rgb(55, 66, 150) 46%, rgb(51, 60, 126) 46%, rgb(51, 60, 126) 56%, rgb(48, 54, 101) 56%, rgb(48, 54, 101) 83%, rgb(44, 48, 77) 83%, rgb(44, 48, 77) 93%, rgb(40, 42, 52) 93%, rgb(40, 42, 52) 100%);
+}
+
+.cont .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    z-index: 1000;
+    width: 100vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cont .header .header-left,
+.cont .header .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.cont .header .header-right .dropdown {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.cont .container {
+    margin-top: 80px;
+    width: 100vw;
+    background: #fff5;
+    backdrop-filter: blur(7px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: flex;
+    
+}
+
+.cont .container .table-container {
+    margin-top: 20px;
+}
+
+.cont .container .table-container .table {
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.cont .container .table-container .table th,
+.cont .container .table-container .table td {
+    padding: 15px;
+    text-align: center;
+    border: none;
+    background: #fffb;
+}
+
+.table-container h3{
+    color: black;
+}
+.cont .container .table-container .table tbody tr {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cont .container .table-container .table tbody tr:nth-child(odd) {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cont .container .table-container .table tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.444) !important;
+}
+
+.cont .container .table-container .table tbody tr:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cont .container .table-container .table thead th {
+    background: #d9d2e980;
+    transition: background-color 0.3s ease;
+}
+
+.cont .container .table-container .table thead th:hover {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.cont .container .table-container .table .form-control {
+    background: transparent;
+    backdrop-filter: blur(30px);
+}
+
+.cont .container .table-container .table .action-buttons button {
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.cont .container .table-container .table .action-buttons button:last-child {
+    margin-right: 0;
+}
+
+.cont .container .table-container .table .barcode-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cont .container .table-container .table .barcode {
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .cont .container .table-container .table .barcode {
+        max-width: 80px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cont .container .table-container .table .barcode {
+        max-width: 60px;
+    }
+}
+
+.cont .container .add-row-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.cont .container .btn.btn-primary.mt-3 {
+    display: block;
+    margin: 0 auto;
+}
+
+@media print {
+    .cont .container .table,
+    .cont .container .table__body {
+        overflow: visible;
+        height: auto !important;
+        width: auto !important;
+    }
+}
