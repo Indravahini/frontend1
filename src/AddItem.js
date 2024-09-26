@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Barcode from 'react-barcode';
 import html2canvas from 'html2canvas';
-import { FiDownload } from 'react-icons/fi'; // Import the download icon from react-icons
+import { FiDownload } from 'react-icons/fi'; 
 import './Additem.css'; // Import the CSS file for styling
 
 const AddItem = () => {
