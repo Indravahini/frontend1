@@ -41,7 +41,7 @@ function Stock() {
             params.location = location; // Include location for non-management departments
         }
 
-        const res = await axios.get('http://localhost:8081/api/stock', { params });
+        const res = await axios.get('https://backend-iuq5.vercel.app/api/stock', { params });
         setStock(res.data);
     } catch (err) {
         console.error('Error fetching stock data:', err);
