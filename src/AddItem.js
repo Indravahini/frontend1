@@ -48,7 +48,7 @@ const AddItem = () => {
     };
 
     const fetchInchargeDetails = (index, location) => {
-        axios.get(`http://backend-iuq5.vercel.app//api/incharge/${location}`)
+        axios.get(`http://backend-iuq5.vercel.app/api/incharge/${location}`)
             .then(response => {
                 const { incharge_name, incharge_phoneno, incharge_mail } = response.data;
                 const updatedRows = [...rows];
