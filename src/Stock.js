@@ -71,7 +71,7 @@ function Stock() {
 
   const handleTypeChange = async (id) => {
     try {
-      await axios.put(`http://localhost:8081/api/updateType/${id}`, { type: 'Returned' });
+      await axios.put(`https://backend-iuq5.vercel.app/api/updateType/${id}`, { type: 'Returned' });
       fetchStocks(department, selectedLocation, location.state?.statusFilter); // Refresh the stock list
     } catch (err) {
       console.error('Error updating type:', err);
