@@ -22,7 +22,7 @@ function Stock() {
 
   const fetchLocations = async () => {
     try {
-      const res = await axios.get('http://localhost:8081/api/locations');
+      const res = await axios.get('https://backend-iuq5.vercel.app/api/locations');
       setLocations(res.data);
     } catch (err) {
       console.error('Error fetching locations:', err);
