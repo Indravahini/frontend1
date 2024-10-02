@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useNavigate } from 'react-router-dom';
-import './App.css';
+import './view.css';
 
 function View() {
     const [data, setData] = useState([]);
@@ -14,7 +14,7 @@ function View() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://backend-iuq5.vercel.app/api/');
+                const response = await axios.get('http://localhost:8081');
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -40,6 +40,9 @@ function View() {
     const uniqueLocations = [...new Set(data.map(item => item.Location))];
 
     return (
+        
+        <>
+        <div className='vbod'>
         <div className='d-flex vh-100 justify-content-center align-items-center'>
             <div className='w-75 bg-white rounded p-4'>
                 <h2 className='text-center mb-4' style={{ color: 'blue' }}>Stock List</h2>
@@ -64,8 +67,8 @@ function View() {
                         ))}
                     </select>
                 </div>
-
-                <table className='table table-bordered'>
+<div className='table-container'></div>
+                <table className='table table-bordered' >
                     <thead>
                         <tr>
                             <th className="text-center" style={{ verticalAlign: 'middle' }}>S.No</th>
@@ -124,7 +127,9 @@ function View() {
                     </div>
                 )}
             </div>
+            </div>
         </div>
+        </>
     );
 }
 
