@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import './RequestPage.css';
 
 function RequestPage() {
     const location = useLocation();
@@ -38,7 +39,7 @@ function RequestPage() {
         }
 
         try {
-            await axios.post('https://backend-iuq5.vercel.app/api/request', requestDetails);
+            await axios.post('http://localhost:8081/api/request', requestDetails);
             navigate('/');
         } catch (error) {
             console.error('Error submitting request:', error);
@@ -46,8 +47,10 @@ function RequestPage() {
     };
 
     return (
-        <div className='d-flex vh-100 justify-content-center align-items-center'>
-            <div className='w-50 bg-white rounded p-4'>
+        <>
+        <div className='rbod'>
+       
+            <div className='form-containerr'>
                 <h2 className='text-center mb-4' style={{ color: 'blue' }}>Request Product</h2>
                 <div className="form-group">
                     <label>Product</label>
@@ -83,6 +86,66 @@ function RequestPage() {
                 <div className="form-group">
                     <label>Student ID</label>
                     <input 
+                        type="text" 
+                        name="student_id" 
+                        value={requestDetails.student_id} 
+                        onChange={handleRequestChange} 
+                        className="form-control" 
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Quantity</label>
+                    <input 
+                        type="number" 
+                        name="quantity" 
+                        value={requestDetails.quantity} 
+                        onChange={handleRequestChange} 
+                        className="form-control" 
+                        min="1"
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Type</label>
+                    <div>
+                        <input 
+                            type="radio" 
+                            name="type" 
+                            value="rent" 
+                            checked={requestDetails.type === 'rent'} 
+                            onChange={handleRequestChange}
+                        /> Rent
+                        <input 
+                            type="radio" 
+                            name="type" 
+                            value="consume" 
+                            checked={requestDetails.type === 'consume'} 
+                            onChange={handleRequestChange}
+                            className="ms-2"
+                        /> consume
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label>Location</label>
+                    <input 
+                        type="text" 
+                        name="location" 
+                        value={requestDetails.location} 
+                        onChange={handleRequestChange} 
+                        className="form-control" 
+                        readOnly
+                    />
+                </div>
+                {error && <p className="text-danger">{error}</p>}
+                <button onClick={handleRequestSubmit} className="btn btn-primary mt-3">Submit Request</button>
+            </div>
+        </div>
+        
+        </>
+    );
+}
+
+export default RequestPage;
+
                         type="text" 
                         name="student_id" 
                         value={requestDetails.student_id} 
