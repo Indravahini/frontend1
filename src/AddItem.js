@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Barcode from 'react-barcode';
 import html2canvas from 'html2canvas';
 import { FiDownload } from 'react-icons/fi'; 
-import './Additem.css'; // Import the CSS file for styling
+import './Additem.css';
 
 const AddItem = () => {
     const location = useLocation();
@@ -12,7 +12,7 @@ const AddItem = () => {
     const [rows, setRows] = useState([
         { name: '', id: '', count: 0, used: 0, destroyed: 0, category: '', location: selectedLocation || '', barcode: '', incharge_name: '', incharge_phoneno: '', incharge_mail: '' }
     ]);
-    const [showDropdown, setShowDropdown] = useState(false); // Dropdown state
+    const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +22,6 @@ const AddItem = () => {
     }, [selectedLocation]);
 
     useEffect(() => {
-        // Update the location field in all rows when selectedLocation changes
         const updatedRows = rows.map(row => ({ ...row, location: selectedLocation || '' }));
         setRows(updatedRows);
     }, [selectedLocation]);
@@ -41,7 +40,6 @@ const AddItem = () => {
         updatedRows[index][name] = value;
         setRows(updatedRows);
 
-        // Fetch incharge details when location is changed
         if (name === 'location') {
             fetchInchargeDetails(index, value);
         }
@@ -111,17 +109,79 @@ const AddItem = () => {
     };
 
     const handleProfileClick = () => {
-        setShowDropdown(!showDropdown); // Toggle dropdown
+        setShowDropdown(!showDropdown);
     };
 
     const handleLogout = () => {
-        // Perform logout logic, such as clearing tokens or user data
-        navigate('/login'); // Redirect to the login page
+        navigate('/login');
     };
+
+    const renderTableHeader = () => (
+        <thead className="d-table-header-group">
+            <tr>
+                <th>S.no</th>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Count</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Incharge Name</th>
+                <th>Incharge Phone No</th>
+                <th>Incharge Email</th>
+                <th>Barcode</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    );
+
+    const renderTableRow = (row, index) => (
+        <tr key={index}>
+            <td data-label="S.no">{index + 1}</td>
+            <td data-label="Name">
+                <input type="text" className="form-control" name="name" value={row.name} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="ID">
+                <input type="text" className="form-control" name="id" value={row.id} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="Count">
+                <input type="number" className="form-control" name="count" value={row.count} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="Category">
+                <select className="form-control" name="category" value={row.category} onChange={(e) => handleRowChange(index, e)} required>
+                    <option value="">Select Category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Sensors">Sensors</option>
+                    <option value="Lighting">Lighting</option>
+                    <option value="Single Board Computer">Single Board Computer</option>
+                </select>
+            </td>
+            <td data-label="Location">
+                <input type="text" className="form-control" name="location" value={row.location} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="Incharge Name">
+                <input type="text" className="form-control" name="incharge_name" value={row.incharge_name} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="Incharge Phone No">
+                <input type="text" className="form-control" name="incharge_phoneno" value={row.incharge_phoneno} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="Incharge Email">
+                <input type="email" className="form-control" name="incharge_mail" value={row.incharge_mail} onChange={(e) => handleRowChange(index, e)} required />
+            </td>
+            <td data-label="Barcode" className="barcode-cell">
+                {row.barcode && <Barcode value={row.barcode} className="barcode" id={`barcode-${index}`} />}
+            </td>
+            <td data-label="Actions">
+                <div className="action-buttons">
+                    <button type="button" className="btn btn-info btn-sm" onClick={() => generateBarcode(index)}>Generate Barcode</button>
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDeleteRow(index)}>Delete</button>
+                    <button type="button" className="btn btn-success btn-sm" onClick={() => handleDownloadBarcode(index)}><FiDownload /></button>
+                </div>
+            </td>
+        </tr>
+    );
 
     return (
         <div className='cont'>
-            {/* Header with Home and Profile buttons */}
             <header className="header">
                 <div className="header-left">
                     <button className="btn btn-primary" onClick={() => navigate('/')}>Home</button>
@@ -136,72 +196,14 @@ const AddItem = () => {
                 </div>
             </header>
 
-            <div className="container mt-5">
+            <div className="container">
                 <div className="table-container">
                     <h3 className="text-primary">Add Items</h3>
                     <form onSubmit={handleSubmit}>
-                        <table className="table table-bordered table-striped mt-3">
-                            <thead>
-                                <tr>
-                                    <th>S.no</th>
-                                    <th>Name</th>
-                                    <th>ID</th>
-                                    <th>Count</th>
-                                    <th>Category</th>
-                                    <th>Location</th>
-                                    <th>Incharge Name</th>
-                                    <th>Incharge Phone No</th>
-                                    <th>Incharge Email</th>
-                                    <th>Barcode</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
+                        <table className="table">
+                            {renderTableHeader()}
                             <tbody>
-                                {rows.map((row, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>
-                                            <input type="text" className="form-control" name="name" value={row.name} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            <input type="text" className="form-control" name="id" value={row.id} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            <input type="number" className="form-control" name="count" value={row.count} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            <select className="form-control" name="category" value={row.category} onChange={(e) => handleRowChange(index, e)} required>
-                                                <option value="">Select Category</option>
-                                                <option value="Electronics">Electronics</option>
-                                                <option value="Sensors">Sensors</option>
-                                                <option value="Lighting">Lighting</option>
-                                                <option value="Single Board Computer">Single Board Computer</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" className="form-control" name="location" value={row.location} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            <input type="text" className="form-control" name="incharge_name" value={row.incharge_name} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            <input type="text" className="form-control" name="incharge_phoneno" value={row.incharge_phoneno} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            <input type="email" className="form-control" name="incharge_mail" value={row.incharge_mail} onChange={(e) => handleRowChange(index, e)} required />
-                                        </td>
-                                        <td>
-                                            {row.barcode && <Barcode value={row.barcode} className="barcode"/>}
-                                        </td>
-                                        <td>
-                                            <div className="action-buttons">
-                                                <button type="button" className="btn btn-info btn-sm" onClick={() => generateBarcode(index)}>Generate Barcode</button>
-                                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDeleteRow(index)}>Delete</button>
-                                                <button type="button" className="btn btn-success btn-sm" onClick={() => handleDownloadBarcode(index)}><FiDownload /></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {rows.map((row, index) => renderTableRow(row, index))}
                             </tbody>
                         </table>
                         <button type="button" className="btn btn-primary add-row-button" onClick={handleAddRow}>Add Row</button>
