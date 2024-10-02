@@ -8,19 +8,15 @@ import incubationLogo from './assets/incubation.png';
 import userIcon from './assets/user.png'; 
 import axios from 'axios';
 import RequestPopup from './RequestPopup';
-import { FaSearch } from "react-icons/fa";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Dashboard = () => {
   const [department, setDepartment] = useState('');
-  const [Profile] = useState('');
   const [totalStock, setTotalStock] = useState(0);
   const [itemsRented, setItemsRented] = useState(0);
   const [itemsConsumed, setItemsConsumed] = useState(0);
   const [itemsReturned, setItemsReturned] = useState(0);
-  const [pendingRequestsCount, setPendingRequestsCount] = useState(0); // Pending requests count
-  const [showDropdown, setShowDropdown] = useState(false); // Dropdown state
   const [isRequestPopupOpen, setRequestPopupOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -28,8 +24,7 @@ const Dashboard = () => {
     const userDepartment = localStorage.getItem('department');
     setDepartment(userDepartment || 'Department');
 
-    // Fetch inventory stats
-    axios.get('https://backend-iuq5.vercel.app/api/inventory-stats', {
+    axios.get('http://localhost:8081/inventory-stats', {
       params: { department: userDepartment }
     })
       .then(res => {
@@ -41,19 +36,7 @@ const Dashboard = () => {
       .catch(err => {
         console.error('Error fetching inventory stats:', err);
       });
-
-    // Fetch the number of pending requests
-    axios.get('https://backend-iuq5.vercel.app/api/pending-requests-count', {
-      params: { department: userDepartment }
-    })
-    .then(res => {
-      setPendingRequestsCount(res.data.count || 0);
-    })
-    .catch(err => {
-      console.error('Error fetching pending requests count:', err);
-    });
-
-  }, [department]);
+  }, []);
 
   const data = {
     labels: ['Total Stock', 'Items Rented', 'Items Consumed', 'Items Returned'],
@@ -89,34 +72,18 @@ const Dashboard = () => {
     navigate('/product', { state: { location: department } });
   };
   
-  const handleProfileClick = () => {
-    setShowDropdown(!showDropdown); // Toggle dropdown
-  };
-
-  const handleLogout = () => {
-    // Perform logout logic, such as clearing tokens or user data
-    navigate('/login'); // Redirect to the login page
-  };
-
   return (
-    <div className="appto">
-      <header className="headerr">
+    <div className="dbod">
+      <header className="header">
         <div className="logo-container">
           <img src={incubationLogo} alt="Incubation Logo" className="incubation-logo" />
           <div className="logo">stic</div>
         </div>
         <div className="search-bar">
-          <input type="text" placeholder="Search products"  />
-          <FaSearch className="icon" />
+          <input type="text" placeholder="Search products" />
         </div>
         <div className="user-profile">
-          <img src={userIcon} alt="User" onClick={handleProfileClick} className="user-image" />
-          {showDropdown && (
-            <div className="dropdown">
-              <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
-            </div>
-          )}
-          <div className='user-name'>{Profile}</div>
+          <img src={userIcon} alt="User" className="user-image" />
         </div>
         <div className="header-links"></div>
       </header>
@@ -156,8 +123,14 @@ const Dashboard = () => {
           </div>
           <div className="buttons">
             <button onClick={handleRequestPopupOpen}>
-              Request Pending <span className="notification-badge">{pendingRequestsCount}</span>
+              Request Pending <span className="notification-badge">5</span>
             </button>
+            {isRequestPopupOpen && (
+        <RequestPopup
+          department={department}
+          onClose={handleRequestPopupClose}
+        />
+      )}
             <button onClick={handleToBeCollectedStockPage}>
               To be Collected Stock
             </button>
@@ -168,15 +141,9 @@ const Dashboard = () => {
             <button onClick={handleProductPage}>Stock List</button>
           </div>
         </div>
-        <div className='col'></div>
       </main>
 
-      {isRequestPopupOpen && (
-        <RequestPopup
-          department={department}
-          onClose={handleRequestPopupClose}
-        />
-      )}
+     
     </div>
   );
 };
