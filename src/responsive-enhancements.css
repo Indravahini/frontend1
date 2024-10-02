@@ -1,0 +1,54 @@
+
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+/* Flexbox enhancements */
+
+
+/* Additional media queries */
+@media (max-width: 992px) {
+  .containers {
+    flex-direction: column;
+  }
+  
+  .img-box {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+  }
+  
+  header ul {
+    margin-top: 1rem;
+  }
+  
+  .social {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .button {
+    padding: 8px 16px;
+  }
+  
+  .containers .text-boxs h2 {
+    font-size: 2.5rem;
+  }
+}
