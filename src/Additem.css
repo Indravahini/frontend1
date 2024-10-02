@@ -15,6 +15,7 @@
     background-image: linear-gradient(135deg, rgb(59, 72, 175) 0%, rgb(59, 72, 175) 31%, rgb(55, 66, 150) 31%, rgb(55, 66, 150) 46%, rgb(51, 60, 126) 46%, rgb(51, 60, 126) 56%, rgb(48, 54, 101) 56%, rgb(48, 54, 101) 83%, rgb(44, 48, 77) 83%, rgb(44, 48, 77) 93%, rgb(40, 42, 52) 93%, rgb(40, 42, 52) 100%);
 }
 
+/* Fixed Header Styling */
 .cont .header {
     display: flex;
     justify-content: space-between;
@@ -32,13 +33,12 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.cont .header .header-left,
-.cont .header .header-right {
+.cont .header-left, .cont .header-right {
     display: flex;
     align-items: center;
 }
 
-.cont .header .header-right .dropdown {
+.cont .dropdown {
     position: absolute;
     top: 50px;
     right: 10px;
@@ -48,22 +48,27 @@
     z-index: 1000;
 }
 
+/* Container */
 .cont .container {
     margin-top: 80px;
-    width: 100vw;
+    width: 80vw;
     background: #fff5;
     backdrop-filter: blur(7px);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    position: flex;
-    
+    position: relative;
+    overflow-y: auto;
+    max-height: 80vh;
 }
 
+/* Table container */
 .cont .container .table-container {
     margin-top: 20px;
+    overflow-x: auto;
 }
 
+/* Table Styling */
 .cont .container .table-container .table {
     border-collapse: separate;
     width: 100%;
@@ -72,7 +77,11 @@
     overflow: hidden;
 }
 
-.cont .container .table-container .table th,
+.cont .container .table-container .table thead {
+    display: table-header-group; /* Explicitly set to display table header */
+}
+
+.cont .container .table-container .table th, 
 .cont .container .table-container .table td {
     padding: 15px;
     text-align: center;
@@ -80,9 +89,6 @@
     background: #fffb;
 }
 
-.table-container h3{
-    color: black;
-}
 .cont .container .table-container .table tbody tr {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -103,6 +109,8 @@
 
 .cont .container .table-container .table thead th {
     background: #d9d2e980;
+    color: #333;
+    font-weight: bold;
     transition: background-color 0.3s ease;
 }
 
@@ -110,11 +118,18 @@
     background: rgba(255, 255, 255, 0.7);
 }
 
+.cont .container .table-container .table td {
+    background: rgba(255, 255, 255, 0.426) !important;
+    vertical-align: middle;
+}
+
+/* Form control inside the table */
 .cont .container .table-container .table .form-control {
     background: transparent;
     backdrop-filter: blur(30px);
 }
 
+/* Action buttons inside the table */
 .cont .container .table-container .table .action-buttons button {
     margin-right: 10px;
     margin-top: 10px;
@@ -124,6 +139,43 @@
     margin-right: 0;
 }
 
+.cont .container .table-container .table .btn {
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.cont .container .table-container .table .btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.cont .container .table-container .table .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.cont .container .table-container .table .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.cont .container .table-container .table .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.cont .container .table-container .add-row-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.cont .container .btn.btn-primary.mt-3 {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Barcode styling */
 .cont .container .table-container .table .barcode-cell {
     display: flex;
     justify-content: center;
@@ -137,34 +189,85 @@
     margin: 0 auto;
 }
 
+/* Responsive styles */
 @media (max-width: 768px) {
-    .cont .container .table-container .table .barcode {
-        max-width: 80px;
+    .cont .container {
+        width: 95vw;
+        padding: 10px;
+        max-height: 70vh;
+    }
+
+    .cont .container .table-container {
+        overflow-x: auto;
+    }
+
+    .cont .container .table-container .table {
+        display: block;
+        width: 100%;
+    }
+
+    .cont .container .table-container .table thead {
+        display: none; /* Hide the table header only on mobile */
+    }
+
+    .cont .container .table-container .table tbody {
+        display: block;
+        width: 100%;
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+
+    .cont .container .table-container .table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cont .container .table-container .table td {
+        display: flex;
+        padding: 10px 0;
+        margin-bottom: 10px;
+        border: none;
+    }
+
+    .cont .container .table-container .table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 40%;
+        margin-right: 10px;
+    }
+
+    .cont .container .table-container .table td > * {
+        width: 60%;
+        text-align: left;
+    }
+
+    .cont .container .table-container .table .action-buttons {
+        justify-content: flex-start;
     }
 }
 
+/* Smaller screens */
 @media (max-width: 576px) {
     .cont .container .table-container .table .barcode {
-        max-width: 60px;
+        max-width: 100px;
     }
-}
 
-.cont .container .add-row-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
+    .cont .header {
+        flex-direction: column;
+        height: auto;
+    }
 
-.cont .container .btn.btn-primary.mt-3 {
-    display: block;
-    margin: 0 auto;
-}
+    .cont .header-left, .cont .header-right {
+        width: 100%;
+        justify-content: center;
+    }
 
-@media print {
-    .cont .container .table,
-    .cont .container .table__body {
-        overflow: visible;
-        height: auto !important;
-        width: auto !important;
+    .cont .container .add-row-button {
+        display: block;
+        width: 100%;
     }
 }
