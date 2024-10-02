@@ -1,0 +1,148 @@
+@media (max-width: 768px) {
+    /* Adjust header layout */
+    header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      z-index: 1000;
+    }
+  
+    header .logo {
+      max-width: 100px;
+      padding-left: 0;
+    }
+  
+    /* Keep header items in a single line */
+    header ul {
+      flex-direction: row;
+      margin-top: 0;
+    }
+  
+    .ul-li {
+      padding-right: 0;
+    }
+  
+    header ul li {
+      padding-right: 5px;
+      padding-top: 0;
+    }
+  
+    header ul li a {
+      margin-left: 5px;
+      font-size: 0.8rem;
+    }
+  
+    /* Adjust circle size and position */
+    .circle {
+      clip-path: circle(50% at 100% 100%);
+    }
+  
+    /* Adjust container layout */
+    .containers {
+      flex-direction: column-reverse;
+      padding-top: 0; /* Remove top padding */
+    }
+  
+    /* Position image right below the header */
+    .containers .img-box {
+      position: fixed;
+      z-index: 1;
+      margin-top: 50px; /* Adjust this to match your header height */
+      margin-bottom: -150px;
+      width: 100%;
+      display: flex;
+      justify-content:end;
+    }
+  
+    /* Ensure text is above the circle */
+    .containers .text-boxs {
+      position: relative;
+      z-index: 2;
+      padding-top: 20px; /* Add some space between image and text */
+    }
+  
+    /* Adjust incubation image size */
+    .incubation {
+      width: 50%;
+      height: auto;
+      margin: 0;
+      max-width: 200px;
+    }
+  
+    /* Hide social icons if they interfere */
+    .social {
+      display: none;
+    }
+  
+    /* Adjust button size */
+    .button {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+  
+    /* Adjust text sizes */
+    .containers .text-boxs h2 {
+      font-size: 1.8rem;
+    }
+  
+    .containers .text-boxs p {
+      font-size: 1rem;
+    }
+  
+    .containers .text-boxs a {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+    }
+  
+    /* Adjust thumb images */
+    .thumb li img {
+      max-width: 50px;
+    }
+  
+    /* Remove gap between header and content */
+    section {
+      padding-top: 0;
+    }
+  }
+  
+  /* Even smaller screens */
+  @media (max-width: 480px) {
+    header .logo {
+      max-width: 80px;
+    }
+  
+    header ul li a {
+      font-size: 0.7rem;
+    }
+  
+    .containers .text-boxs h2 {
+      font-size: 1.5rem;
+    }
+  
+    .containers .text-boxs p {
+      font-size: 0.9rem;
+    }
+  
+    .button {
+      padding: 4px 8px;
+      font-size: 0.7rem;
+    }
+  
+    /* Further reduce incubation image size for very small screens */
+    .incubation {
+      width: 80%;
+      max-width: 150px;
+      height: 100%;
+    }
+  
+    /* Adjust margin-top for smaller screens */
+    .containers .img-box {
+      margin-top: 40px; /* Adjust if header is smaller on very small screens */
+    }
+  }
