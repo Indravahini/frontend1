@@ -24,7 +24,7 @@ const Dashboard = () => {
     const userDepartment = localStorage.getItem('department');
     setDepartment(userDepartment || 'Department');
 
-    axios.get('http://localhost:8081/inventory-stats', {
+    axios.get('/api/inventory-stats', {
       params: { department: userDepartment }
     })
       .then(res => {
