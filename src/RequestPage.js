@@ -39,7 +39,7 @@ function RequestPage() {
         }
 
         try {
-            await axios.post('http://localhost:8081/api/request', requestDetails);
+            await axios.post('/api/request', requestDetails);
             navigate('/');
         } catch (error) {
             console.error('Error submitting request:', error);
